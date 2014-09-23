@@ -1,0 +1,103 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/zodiac_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp" />
+
+    <mn.ismartdev.horoscope.text.Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_back"
+        android:padding="10dp"
+        android:text="@string/zodiac_main"
+        android:textColor="@android:color/white" />
+
+    <mn.ismartdev.horoscope.text.Regular
+        android:id="@+id/zodiac_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/pink_back" />
+
+    <mn.ismartdev.horoscope.text.Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_back"
+        android:padding="10dp"
+        android:text="@string/zodiac_love"
+        android:textColor="@android:color/white" />
+
+    <mn.ismartdev.horoscope.text.Regular
+        android:id="@+id/zodiac_love"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/pink_back" />
+
+    <mn.ismartdev.horoscope.text.Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_back"
+        android:padding="10dp"
+        android:text="@string/zodiac_balance"
+        android:textColor="@android:color/white" />
+
+    <mn.ismartdev.horoscope.text.Regular
+        android:id="@+id/zodiac_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/pink_back" />
+
+    <mn.ismartdev.horoscope.text.Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_back"
+        android:padding="10dp"
+        android:text="@string/zodiac_style"
+        android:textColor="@android:color/white" />
+
+    <mn.ismartdev.horoscope.text.Regular
+        android:id="@+id/zodiac_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/pink_back" />
+
+    <mn.ismartdev.horoscope.text.Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_back"
+        android:padding="10dp"
+        android:text="@string/zodiac_femaleBalance"
+        android:textColor="@android:color/white" />
+
+    <mn.ismartdev.horoscope.text.Regular
+        android:id="@+id/zodiac_Fbalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/pink_back" />
+
+    <mn.ismartdev.horoscope.text.Bold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_back"
+        android:padding="10dp"
+        android:text="@string/zodiac_sex"
+        android:textColor="@android:color/white" />
+
+    <mn.ismartdev.horoscope.text.Regular
+        android:id="@+id/zodiac_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/pink_back" />
+
+</LinearLayout>

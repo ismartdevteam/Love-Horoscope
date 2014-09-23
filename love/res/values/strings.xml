@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">lovehoroscope</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Хайрын Зурхай</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="zodiac_main">Ерөнхий</string>
+    <string name="zodiac_balance">Зохицол</string>
+    <string name="zodiac_love">Хайр дурлал</string>
+    <string name="zodiac_style">Дүр төрх</string>
+    <string name="zodiac_gift">Бэлэг</string>
+    <string name="zodiac_manLove">Зүрхийг булаах </string>
+    <string name="zodiac_sex">Хүсэл тачаал, секс </string>
+    <string name="zodiac_femaleBalance">Хайр дурлалын зохицох</string>
+    <string name="zodiac_x">Араар тавилт</string>
 
 </resources>
