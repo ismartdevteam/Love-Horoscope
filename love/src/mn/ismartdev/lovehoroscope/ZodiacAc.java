@@ -17,9 +17,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -30,7 +30,7 @@ import com.flavienlaurent.notboringactionbar.AlphaForegroundColorSpan;
 import com.flavienlaurent.notboringactionbar.KenBurnsSupportView;
 import com.nineoldandroids.view.ViewHelper;
 
-public class ZodiacFrag extends Fragment implements ScrollTabHolder,
+public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		ViewPager.OnPageChangeListener {
 
 	private KenBurnsSupportView mHeaderPicture;
@@ -54,16 +54,32 @@ public class ZodiacFrag extends Fragment implements ScrollTabHolder,
 	private DatabaseHelper helper;
 	private int sex;
 
-	public ZodiacFrag() {
-
-	}
-
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		b = getArguments();
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mMinHeaderHeight = this.getResources().getDimensionPixelSize(
+				R.dimen.min_header_height);
+		mHeaderHeight = this.getResources().getDimensionPixelSize(
+				R.dimen.header_height);
+		mMinHeaderTranslation = -mMinHeaderHeight + getActionBarHeight();
+
+		setContentView(R.layout.home_frag);
+		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
+
+		mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setOffscreenPageLimit(4);
+
+		b = getIntent().getExtras();
 		sex = b.getInt("gender", 1);
-		helper = new DatabaseHelper(getActivity());
+		if (sex == 2)
+			mHeaderPicture.setResourceIds(R.drawable.five, R.drawable.four,
+					R.drawable.three, R.drawable.two, R.drawable.one);
+		else
+			mHeaderPicture.setResourceIds(R.drawable.mfive, R.drawable.mfour,
+					R.drawable.mthree, R.drawable.mtwo, R.drawable.mone);
+		mHeader = findViewById(R.id.header);
+		helper = new DatabaseHelper(this);
 		try {
 			zodList = helper.getZodiacDao().queryBuilder().orderBy("id", true)
 					.query();
@@ -71,10 +87,10 @@ public class ZodiacFrag extends Fragment implements ScrollTabHolder,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mPagerAdapter = new PagerAdapter(getActivity()
-				.getSupportFragmentManager(), zodList);
+		mPagerAdapter = new PagerAdapter(this.getSupportFragmentManager(),
+				zodList);
 		mPagerAdapter.setTabHolderScrollingContent(this);
-
+		mPagerAdapter.notifyDataSetChanged();
 		mViewPager.setAdapter(mPagerAdapter);
 
 		mPagerSlidingTabStrip.setViewPager(mViewPager);
@@ -83,38 +99,11 @@ public class ZodiacFrag extends Fragment implements ScrollTabHolder,
 		mAlphaForegroundColorSpan = new AlphaForegroundColorSpan(0xffffffff);
 
 		// ViewHelper.setAlpha(getActionBarIconView(), 0f);
-		bar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+		bar = ((ActionBarActivity) this).getSupportActionBar();
 		bar.setBackgroundDrawable(null);
+		bar.setHomeButtonEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(true);
 
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		mMinHeaderHeight = getActivity().getResources().getDimensionPixelSize(
-				R.dimen.min_header_height);
-		mHeaderHeight = getActivity().getResources().getDimensionPixelSize(
-				R.dimen.header_height);
-		mMinHeaderTranslation = -mMinHeaderHeight + getActionBarHeight();
-
-		v = inflater.inflate(R.layout.home_frag, container, false);
-		Log.e("header", mMinHeaderTranslation + "");
-		mHeaderPicture = (KenBurnsSupportView) v
-				.findViewById(R.id.header_picture);
-		if(sex==2)
-		mHeaderPicture.setResourceIds(R.drawable.five, R.drawable.four,
-				R.drawable.three, R.drawable.two, R.drawable.one);
-		else
-			mHeaderPicture.setResourceIds(R.drawable.mfive, R.drawable.mfour,
-					R.drawable.mthree, R.drawable.mtwo, R.drawable.mone);
-		mHeader = v.findViewById(R.id.header);
-
-		mPagerSlidingTabStrip = (PagerSlidingTabStrip) v
-				.findViewById(R.id.tabs);
-		mViewPager = (ViewPager) v.findViewById(R.id.pager);
-		mViewPager.setOffscreenPageLimit(4);
-
-		return v;
 	}
 
 	@Override
@@ -186,11 +175,11 @@ public class ZodiacFrag extends Fragment implements ScrollTabHolder,
 		}
 
 		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-			getActivity().getTheme().resolveAttribute(
-					android.R.attr.actionBarSize, mTypedValue, true);
-		} else {
-			getActivity().getTheme().resolveAttribute(R.attr.actionBarSize,
+			getTheme().resolveAttribute(android.R.attr.actionBarSize,
 					mTypedValue, true);
+		} else {
+			getTheme()
+					.resolveAttribute(R.attr.actionBarSize, mTypedValue, true);
 		}
 
 		mActionBarHeight = TypedValue.complexToDimensionPixelSize(
@@ -216,6 +205,26 @@ public class ZodiacFrag extends Fragment implements ScrollTabHolder,
 				.findViewById(android.support.v7.appcompat.R.id.home);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// getMenuInflater().inflate(R.menu.ad_menu, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		int id = item.getItemId();
+		// if (id == R.id.action_search_ad) {
+		// mPagerAdapter.filterCar();
+		// }
+		if (id == android.R.id.home)
+			onBackPressed();
+		return true;
+	}
+
 	public class PagerAdapter extends FragmentPagerAdapter {
 
 		private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
@@ -233,6 +242,7 @@ public class ZodiacFrag extends Fragment implements ScrollTabHolder,
 		public void setTabHolderScrollingContent(ScrollTabHolder listener) {
 			mListener = listener;
 		}
+
 
 		@Override
 		public CharSequence getPageTitle(int position) {

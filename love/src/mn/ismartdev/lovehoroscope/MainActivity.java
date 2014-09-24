@@ -43,15 +43,15 @@ public class MainActivity extends ActionBarActivity implements
 		case 0:
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, new GenderChoose()).commit();
-			onSectionAttached(position);
 			break;
-		case 1:
-
+		case 4:
+			fragmentManager.beginTransaction()
+			.replace(R.id.container, new SameTime()).commit();
 			break;
 		default:
 			break;
 		}
-
+		onSectionAttached(position);
 		restoreActionBar();
 	}
 

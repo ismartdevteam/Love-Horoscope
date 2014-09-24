@@ -1,10 +1,8 @@
 package mn.ismartdev.lovehoroscope;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,33 +59,12 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
 
-	private TypedValue mTypedValue = new TypedValue();
 
-	private int mActionBarHeight;
 	public static String[] navigationMenus = { "Нүүр хуудас",
 			"Төрсөн сарын зурхай", "Ямар бэлэг өгөх вэ?",
 			"Египет зурхай", "Ижил цагийн тайлал", "Түгээх" };
 
 	public NavigationDrawerFragment() {
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public int getActionBarHeight() {
-		if (mActionBarHeight != 0) {
-			return mActionBarHeight;
-		}
-
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-			getActivity().getTheme().resolveAttribute(
-					android.R.attr.actionBarSize, mTypedValue, true);
-		} else {
-			getActivity().getTheme().resolveAttribute(R.attr.actionBarSize,
-					mTypedValue, true);
-		}
-
-		mActionBarHeight = TypedValue.complexToDimensionPixelSize(
-				mTypedValue.data, getResources().getDisplayMetrics());
-		return mActionBarHeight;
 	}
 
 	@Override
@@ -125,7 +101,6 @@ public class NavigationDrawerFragment extends Fragment {
 			Bundle savedInstanceState) {
 		mDrawerListView = (ListView) inflater.inflate(
 				R.layout.fragment_navigation_drawer, container, false);
-		mDrawerListView.setPadding(0, getActionBarHeight(), 0, 0);
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override

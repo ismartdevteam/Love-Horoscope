@@ -1,10 +1,9 @@
 package mn.ismartdev.lovehoroscope;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 
 public class GenderChoose extends Fragment implements OnClickListener {
 
-	private ActionBar bar;
 	private View v;
 	private ImageView male;
 	private ImageView female;
@@ -26,8 +24,6 @@ public class GenderChoose extends Fragment implements OnClickListener {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		bar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-		bar.setBackgroundDrawable(null);
 		clickAnim = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.but_click);
 	}
@@ -74,11 +70,10 @@ public class GenderChoose extends Fragment implements OnClickListener {
 					b.putInt("gender", 1);
 					break;
 				}
-				ZodiacFrag zodiacFrag = new ZodiacFrag();
-				zodiacFrag.setArguments(b);
-				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.container, zodiacFrag)
-						.addToBackStack("home").commit();
+				Intent zodiac = new Intent(getActivity(), ZodiacAc.class);
+				zodiac.putExtras(b);
+				startActivity(zodiac);
+
 			}
 		});
 	}
