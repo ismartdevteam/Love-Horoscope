@@ -5,7 +5,9 @@ import java.util.List;
 
 import mn.ismartdev.horoscope.model.DatabaseHelper;
 import mn.ismartdev.horoscope.model.Zodiac;
+import mn.ismartdev.lovehoroscope.utils.FacebookLogin;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +23,9 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 
@@ -31,20 +35,22 @@ import com.flavienlaurent.notboringactionbar.KenBurnsSupportView;
 import com.nineoldandroids.view.ViewHelper;
 
 public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
-		ViewPager.OnPageChangeListener {
+		ViewPager.OnPageChangeListener, OnClickListener {
 
 	private KenBurnsSupportView mHeaderPicture;
 	private View mHeader;
-
+	private ImageView fb;
 	private PagerSlidingTabStrip mPagerSlidingTabStrip;
 	private ViewPager mViewPager;
 	private PagerAdapter mPagerAdapter;
+	Animation clickAnim;
 	View v;
 	private int mActionBarHeight;
 	private int mMinHeaderHeight;
 	private int mHeaderHeight;
 	private int mMinHeaderTranslation;
-
+	private String[] signs = { "Хонь", "Үхэр", "Ихэр", "Мэлхий", "Арслан",
+			"Охин", "Жинлүүр", "Хилэнц", "Нум", "Матар", "Хумх", "Загас", };
 	private Bundle b;
 	private TypedValue mTypedValue = new TypedValue();
 	private SpannableString mSpannableString;
@@ -53,6 +59,7 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 	private List<Zodiac> zodList;
 	private DatabaseHelper helper;
 	private int sex;
+	private String shareDesc = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,11 +71,20 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		mMinHeaderTranslation = -mMinHeaderHeight + getActionBarHeight();
 
 		setContentView(R.layout.home_frag);
+		// share
+		fb = (ImageView) findViewById(R.id.fb_share);
+		clickAnim = AnimationUtils.loadAnimation(this,
+				R.anim.but_click);
+		clickAnim.setRepeatCount(Animation.INFINITE);
+		
+		fb.setOnClickListener(this);
+		fb.setAnimation(clickAnim);
+		
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
 
 		mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setOffscreenPageLimit(4);
+		mViewPager.setOffscreenPageLimit(1);
 
 		b = getIntent().getExtras();
 		sex = b.getInt("gender", 1);
@@ -92,9 +108,10 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		mPagerAdapter.setTabHolderScrollingContent(this);
 		mPagerAdapter.notifyDataSetChanged();
 		mViewPager.setAdapter(mPagerAdapter);
-
+		
 		mPagerSlidingTabStrip.setViewPager(mViewPager);
 		mPagerSlidingTabStrip.setOnPageChangeListener(this);
+
 		mSpannableString = new SpannableString(getString(R.string.app_name));
 		mAlphaForegroundColorSpan = new AlphaForegroundColorSpan(0xffffffff);
 
@@ -103,7 +120,7 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		bar.setBackgroundDrawable(null);
 		bar.setHomeButtonEnabled(true);
 		bar.setDisplayHomeAsUpEnabled(true);
-
+		
 	}
 
 	@Override
@@ -123,7 +140,8 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter
 				.getScrollTabHolders();
 		ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
-
+		shareDesc = signs[position] + " ордны Хайр дурлал: "
+				+ currentHolder.getDesc();
 		currentHolder.adjustScroll((int) (mHeader.getHeight() + ViewHelper
 				.getTranslationY(mHeader)));
 	}
@@ -230,8 +248,6 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
 		private final List<Zodiac> TITLES;
 		private ScrollTabHolder mListener;
-		private String[] signs = { "Хонь", "Үхэр", "Ихэр", "Мэлхий", "Арслан",
-				"Охин", "Жинлүүр", "Хилэнц", "Нум", "Матар", "Хумх", "Загас", };
 
 		public PagerAdapter(FragmentManager fm, List<Zodiac> titles) {
 			super(fm);
@@ -242,7 +258,6 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		public void setTabHolderScrollingContent(ScrollTabHolder listener) {
 			mListener = listener;
 		}
-
 
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -271,6 +286,25 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 			return mScrollTabHolders;
 		}
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if (v == fb) {
+			onPageSelected(mViewPager.getCurrentItem());
+			Bundle b = new Bundle();
+			b.putString("desc", shareDesc);
+			Intent share = new Intent(ZodiacAc.this, FacebookLogin.class);
+			share.putExtras(b);
+			startActivity(share);
+		}
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 
 }

@@ -59,10 +59,8 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
 
-
 	public static String[] navigationMenus = { "Нүүр хуудас",
-			"Төрсөн сарын зурхай", "Ямар бэлэг өгөх вэ?",
-			"Египет зурхай", "Ижил цагийн тайлал", "Түгээх" };
+			"Төрсөн сарын зурхай", "Ямар бэлэг өгөх вэ?", "Ижил цагийн тайлал" };
 
 	public NavigationDrawerFragment() {
 	}

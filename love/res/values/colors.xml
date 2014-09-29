@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <color name="background_tab_pressed">#6633B5E5</color>
-        <color name="pink_back">#d73473</color>
-        <color name="blue_back">#355ae2</color>
+
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="pink_back">#d73473</color>
+    <color name="blue_back">#355ae2</color>
+    <color name="navi_back">#4e50a0</color>
+
 </resources>

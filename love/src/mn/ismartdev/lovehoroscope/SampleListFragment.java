@@ -5,9 +5,13 @@ import java.util.List;
 
 import mn.ismartdev.horoscope.model.DatabaseHelper;
 import mn.ismartdev.horoscope.model.Zodiac;
+import mn.ismartdev.horoscope.text.Bold;
 import mn.ismartdev.horoscope.text.Regular;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -39,6 +43,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 	private int mPosition;
 	private int mSex;
 	private DatabaseHelper helper;
+	private String shareText = "";
 
 	public static Fragment newInstance(int position, int sex) {
 		SampleListFragment f = new SampleListFragment();
@@ -134,6 +139,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 						R.layout.f_list_item, parent, false);
 				hol = new Holder();
 				hol.image = (ImageView) v.findViewById(R.id.zodiac_image);
+				hol.duration = (Bold) v.findViewById(R.id.zodiac_duration);
 				hol.main = (Regular) v.findViewById(R.id.zodiac_main);
 				hol.love = (Regular) v.findViewById(R.id.zodiac_love);
 				hol.balance = (Regular) v.findViewById(R.id.zodiac_balance);
@@ -144,10 +150,14 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 				v.setTag(hol);
 			} else
 				hol = (Holder) v.getTag();
-			hol.image.setImageResource(FemaleiconResId[mPosition]);
+			hol.image.setImageBitmap(decodeSampledBitmapFromResource(
+					mContext.getResources(), FemaleiconResId[mPosition], 150,
+					150));
 			hol.main.setText(zodiac.main);
 			hol.love.setText(zodiac.mainFlove);
-
+			shareText = zodiac.mainFlove;
+			hol.duration.setText(getActivity().getString(R.string.zodiac_main)
+					+ " " + zodiac.duration);
 			hol.balance.setText(zodiac.balance);
 
 			hol.style.setText(zodiac.style);
@@ -161,6 +171,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 
 		class Holder {
 			ImageView image;
+			Bold duration;
 			Regular main;
 			Regular love;
 			Regular balance;
@@ -193,6 +204,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 				hol.image = (ImageView) v.findViewById(R.id.zodiac_mimage);
 				hol.main = (Regular) v.findViewById(R.id.zodiac_mmain);
 				hol.love = (Regular) v.findViewById(R.id.zodiac_mlove);
+				hol.duration = (Bold) v.findViewById(R.id.zodiac_mduration);
 				hol.balance = (Regular) v.findViewById(R.id.zodiac_mbalance);
 				hol.mx = (Regular) v.findViewById(R.id.zodiac_mx);
 				hol.gLove = (Regular) v.findViewById(R.id.zodiac_mGlove);
@@ -200,10 +212,15 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 				v.setTag(hol);
 			} else
 				hol = (Holder) v.getTag();
-			hol.image.setImageResource(MaleiconResId[mPosition]);
+			hol.image
+					.setImageBitmap(decodeSampledBitmapFromResource(
+							mContext.getResources(), MaleiconResId[mPosition],
+							150, 150));
 			hol.main.setText(zodiac.main);
 			hol.love.setText(zodiac.mainMlove);
-
+			shareText = zodiac.mainMlove;
+			hol.duration.setText(getActivity().getString(R.string.zodiac_main)
+					+ " " + zodiac.duration);
 			hol.balance.setText(zodiac.balance);
 
 			hol.gLove.setText(zodiac.mGetLove);
@@ -217,6 +234,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 
 		class Holder {
 			ImageView image;
+			Bold duration;
 			Regular main;
 			Regular love;
 			Regular balance;
@@ -225,5 +243,52 @@ public class SampleListFragment extends ScrollTabHolderFragment implements
 			Regular sex;
 
 		}
+	}
+
+	public static Bitmap decodeSampledBitmapFromResource(Resources res,
+			int resId, int reqWidth, int reqHeight) {
+
+		// First decode with inJustDecodeBounds=true to check dimensions
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeResource(res, resId, options);
+
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth,
+				reqHeight);
+
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeResource(res, resId, options);
+	}
+
+	public static int calculateInSampleSize(BitmapFactory.Options options,
+			int reqWidth, int reqHeight) {
+		// Raw height and width of image
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+
+			final int halfHeight = height / 2;
+			final int halfWidth = width / 2;
+
+			// Calculate the largest inSampleSize value that is a power of 2 and
+			// keeps both
+			// height and width larger than the requested height and width.
+			while ((halfHeight / inSampleSize) > reqHeight
+					&& (halfWidth / inSampleSize) > reqWidth) {
+				inSampleSize *= 2;
+			}
+		}
+
+		return inSampleSize;
+	}
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return shareText;
 	}
 }

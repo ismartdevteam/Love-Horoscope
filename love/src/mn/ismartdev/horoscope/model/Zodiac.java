@@ -30,6 +30,8 @@ public class Zodiac {
 	@DatabaseField
 	public String sexF;
 	@DatabaseField
+	public String duration;
+	@DatabaseField
 	public String fBalance;
 	@DatabaseField
 	public String mX;

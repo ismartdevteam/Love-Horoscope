@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@color/pink_back"
         android:padding="10dp"
+        android:id="@+id/zodiac_duration"
         android:text="@string/zodiac_main"
         android:textColor="@android:color/white" />
 

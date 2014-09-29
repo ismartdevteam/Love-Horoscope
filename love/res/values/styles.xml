@@ -41,7 +41,7 @@
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
 	
         <!-- Support library compatibility -->
-        <item name="background">@color/pink_back</item>
+        <item name="background">@color/navi_back</item>
     </style>
 
 </resources>

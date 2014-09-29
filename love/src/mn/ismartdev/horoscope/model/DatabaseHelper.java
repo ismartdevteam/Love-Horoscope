@@ -21,6 +21,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static String databaseName = "horoscope.sqlite";
 	private static int databaseVersion = 1;
 	Dao<Zodiac, Integer> zodDao = null;
+	Dao<MonthZodiac, Integer> moDao = null;
 	private Context _context;
 
 	public DatabaseHelper(Context context) {
@@ -68,7 +69,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		// TODO Auto-generated method stub
 		try {
 			TableUtils.createTableIfNotExists(connectionSource, Zodiac.class);
-
+			TableUtils.createTableIfNotExists(connectionSource, MonthZodiac.class);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,6 +84,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 		try {
 			TableUtils.createTable(connectionSource, Zodiac.class);
+			TableUtils.createTable(connectionSource, MonthZodiac.class);
 			onCreate(arg0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -97,5 +99,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 		return zodDao;
 	}
+	public Dao<MonthZodiac, Integer> getMonthZodiacDao() throws SQLException {
+		if (moDao == null)
 
+			moDao = getDao(MonthZodiac.class);
+
+		return moDao;
+	}
 }

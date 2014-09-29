@@ -4,7 +4,8 @@
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:parallexOffset=".2"
+    android:scrollbars="none"
+    app:parallexOffset=".3"
     tools:context=".MainActivity" >
 
     <ImageView
@@ -16,6 +17,7 @@
 
     <couk.jenxsol.parallaxscrollview.views.ObservableScrollView
         android:layout_width="match_parent"
+            android:scrollbars="none"
         android:layout_height="match_parent" >
 
         <LinearLayout
