@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class GiftFrag extends Fragment {
 	private PagerSlidingTabStrip tab;
@@ -26,6 +28,7 @@ public class GiftFrag extends Fragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
 	}
 
 	@Override
@@ -33,6 +36,9 @@ public class GiftFrag extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		v = inflater.inflate(R.layout.gift_main, container, false);
 		tab = (PagerSlidingTabStrip) v.findViewById(R.id.zodiacNameTab);
+		AdView adView = (AdView)v.findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		adView.loadAd(adRequest);
 		pager = (ViewPager) v.findViewById(R.id.zodiacPager);
 		pager.setAdapter(new PagerAdapter(getActivity()
 				.getSupportFragmentManager()));

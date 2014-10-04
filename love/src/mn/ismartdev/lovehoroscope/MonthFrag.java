@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class MonthFrag extends Fragment {
 
@@ -28,6 +30,9 @@ public class MonthFrag extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		v = inflater.inflate(R.layout.month_main, container, false);
 		tab = (PagerSlidingTabStrip) v.findViewById(R.id.monthNameTab);
+		AdView adView = (AdView)v.findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		adView.loadAd(adRequest);
 		pager = (ViewPager) v.findViewById(R.id.monthPager);
 		pager.setAdapter(new MonthPagerAdapter(getActivity()
 				.getSupportFragmentManager()));

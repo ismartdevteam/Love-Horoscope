@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="53dip" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-1094855352847180/1103951557" />
+
+        <ImageView
+            android:id="@+id/fb_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/adView"
+            android:layout_alignParentRight="true"
+            android:padding="4dp"
+            android:src="@drawable/fb" />
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/header"
@@ -25,13 +49,5 @@
             android:layout_gravity="bottom"
             android:background="@android:color/transparent" />
     </FrameLayout>
-
-    <ImageView
-        android:id="@+id/fb_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:padding="10dp"
-        android:src="@drawable/fb" />
 
 </FrameLayout>

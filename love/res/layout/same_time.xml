@@ -17,8 +17,8 @@
 
     <couk.jenxsol.parallaxscrollview.views.ObservableScrollView
         android:layout_width="match_parent"
-            android:scrollbars="none"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -740,6 +740,13 @@
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
             </LinearLayout>
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-1094855352847180/1103951557" />
         </LinearLayout>
     </couk.jenxsol.parallaxscrollview.views.ObservableScrollView>
 

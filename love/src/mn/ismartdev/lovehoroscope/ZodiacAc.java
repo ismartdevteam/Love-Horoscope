@@ -32,6 +32,8 @@ import android.widget.ImageView;
 import com.astuetz.PagerSlidingTabStrip;
 import com.flavienlaurent.notboringactionbar.AlphaForegroundColorSpan;
 import com.flavienlaurent.notboringactionbar.KenBurnsSupportView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nineoldandroids.view.ViewHelper;
 
 public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
@@ -71,15 +73,17 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		mMinHeaderTranslation = -mMinHeaderHeight + getActionBarHeight();
 
 		setContentView(R.layout.home_frag);
+		AdView adView = (AdView)findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		adView.loadAd(adRequest);
 		// share
 		fb = (ImageView) findViewById(R.id.fb_share);
-		clickAnim = AnimationUtils.loadAnimation(this,
-				R.anim.but_click);
+		clickAnim = AnimationUtils.loadAnimation(this, R.anim.but_click);
 		clickAnim.setRepeatCount(Animation.INFINITE);
-		
+
 		fb.setOnClickListener(this);
 		fb.setAnimation(clickAnim);
-		
+
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
 
 		mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -108,7 +112,7 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		mPagerAdapter.setTabHolderScrollingContent(this);
 		mPagerAdapter.notifyDataSetChanged();
 		mViewPager.setAdapter(mPagerAdapter);
-		
+
 		mPagerSlidingTabStrip.setViewPager(mViewPager);
 		mPagerSlidingTabStrip.setOnPageChangeListener(this);
 
@@ -120,7 +124,7 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		bar.setBackgroundDrawable(null);
 		bar.setHomeButtonEnabled(true);
 		bar.setDisplayHomeAsUpEnabled(true);
-		
+
 	}
 
 	@Override
@@ -140,10 +144,14 @@ public class ZodiacAc extends ActionBarActivity implements ScrollTabHolder,
 		SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter
 				.getScrollTabHolders();
 		ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
-		shareDesc = signs[position] + " ордны Хайр дурлал: "
-				+ currentHolder.getDesc();
-		currentHolder.adjustScroll((int) (mHeader.getHeight() + ViewHelper
-				.getTranslationY(mHeader)));
+		try {
+			shareDesc = signs[position] + " ордны Хайр дурлал: "
+					+ currentHolder.getDesc();
+			currentHolder.adjustScroll((int) (mHeader.getHeight() + ViewHelper
+					.getTranslationY(mHeader)));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

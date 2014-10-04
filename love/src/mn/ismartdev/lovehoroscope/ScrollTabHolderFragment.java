@@ -16,4 +16,12 @@ public abstract class ScrollTabHolderFragment extends Fragment implements Scroll
 		// nothing
 	}
 
+
+
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
 }
